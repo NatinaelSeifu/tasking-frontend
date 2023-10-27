@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frnt-end
+  labels:
+    app: frnt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frnt-web-2
+  template:
+    metadata:
+      labels:
+        app: frnt-web-2
+    spec:
+      containers:
+      - name: frntend
+        image: natinael/frnt-web-2
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ME_CONFIG_BACKEND_SERVER
+          valueFrom: 
+            configMapKeyRef:
+              name: backend-configmap
+              key: backend_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frnt-service
+spec:
+  selector:
+    app: frnt
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000        
