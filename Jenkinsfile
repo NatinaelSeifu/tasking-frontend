@@ -56,7 +56,7 @@ pipeline {
             steps {
                 
                 script {
-                    sh "aws ecs update-service --cluster ${CLUSTOR_NAME} --service ${IMAGE_NAME} --force-new-deployment"
+                    sh "aws ecs update-service --cluster ${CLUSTOR_NAME} --service ${SERVICE_NAME} --force-new-deployment"
                 }
             }
         }
